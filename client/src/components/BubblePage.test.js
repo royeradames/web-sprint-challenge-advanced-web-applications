@@ -1,24 +1,28 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import BubblePage from "./BubblePage";
-import { fetchBuggles } from '../api/fetchBuggles'
+import { fetchBuggles as mockFetchBuggles} from '../api/fetchBuggles'
 import { act } from 'react-dom/test-utils';
 //mock the api axio call file
 jest.mock('../api/fetchBuggles')
 // as mockFetchBuggles
 test("Fetches data and renders the bubbles", async () => {
   //mock data
-  fetchBuggles.mockResolvedValueOnce(mockBubblesData)
+  mockFetchBuggles.mockResolvedValueOnce(mockBubblesData)
   //render component
-
   render(<BubblePage />)
 
-  // screen.debug()
+  screen.debug()
+  //get the heading of the test
+  const bubbleHeading = screen.getByRole('heading', { name: /Bubble Page/i })
+  const colorListHeading = screen.getByRole('heading', { name: /colors/i })
+
+  expect(bubbleHeading).toHaveTextContent(/Bubble Page/i)
+  expect(colorListHeading).toHaveTextContent(/colors/i)
 
 })
 
-const mockBubblesData = {
-  data: [
+const mockBubblesData = [
     {
       color: "aliceblue",
       code: {
@@ -97,4 +101,3 @@ const mockBubblesData = {
       id: 11
     }
   ]
-}
