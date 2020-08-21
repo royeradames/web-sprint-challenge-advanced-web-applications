@@ -32,14 +32,14 @@ const ColorList = ({ colors, updateColors }) => {
         console.log(resp.data)
 
         //update the color on the gui with the one from ther server
-        const updateColors = colors.map(aColor => {
+        const updatedColors = colors.map(aColor => {
           const isSameColorServerGUI = aColor.id === resp.data.id
           if (isSameColorServerGUI) {
             aColor = resp.data
           }
           return aColor
         })
-        updateColors(updateColors)
+        updateColors(updatedColors)
       })
       .catch(error => console.error(error))
   };
