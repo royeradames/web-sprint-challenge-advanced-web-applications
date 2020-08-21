@@ -15,7 +15,7 @@ const BubblePage = () => {
         setColorList(resp.data)
       })
       .catch( error => console.error(error))
-  }, [])
+  }, [colorList])
   return (
     <>
     <h1>
