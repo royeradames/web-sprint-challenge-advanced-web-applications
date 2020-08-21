@@ -1,6 +1,6 @@
 import {axiosWithAuth} from '../utils/axiosWithAuth'
  
-export default function fetchBuggles() {
+export function fetchBuggles() {
     return axiosWithAuth().get('/api/colors')
     .then( resp => {debugger;return resp})
     .catch( error => {debugger;return error})

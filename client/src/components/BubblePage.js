@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import fetchBuggles from '../api/fetchBuggles'
+import {fetchBuggles} from '../api/fetchBuggles'
 
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
