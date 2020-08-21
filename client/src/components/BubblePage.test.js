@@ -16,9 +16,12 @@ test("Fetches data and renders the bubbles", async () => {
   //get the heading of the test
   const bubbleHeading = screen.getByRole('heading', { name: /Bubble Page/i })
   const colorListHeading = screen.getByRole('heading', { name: /colors/i })
+  const bubblesHeading = screen.getByRole('heading', { name: /bubbles/i })
 
   expect(bubbleHeading).toHaveTextContent(/Bubble Page/i)
   expect(colorListHeading).toHaveTextContent(/colors/i)
+  expect(bubblesHeading).toHaveTextContent(/bubbles/i)
+  screen.debug()
 
 })
 
