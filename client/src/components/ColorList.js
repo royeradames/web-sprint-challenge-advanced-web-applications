@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const initialColor = {
   color: "",
@@ -10,8 +10,11 @@ const ColorList = ({ colors, updateColors }) => {
   console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
+  const [colorId, setColoId] = useState(undefined)
 
   const editColor = color => {
+    debugger
+    setColoId(color.id)
     setEditing(true);
     setColorToEdit(color);
   };
@@ -21,25 +24,53 @@ const ColorList = ({ colors, updateColors }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
+    debugger
+    axiosWithAuth().put(`/api/colors/${colorId}`, colorToEdit)
+      .then(resp => {
+        debugger
+        //check data return by the server
+        console.log(resp.data)
+
+        //update the color on the gui with the one from ther server
+        const updatedColors = colors.map(aColor => {
+          const isSameColorServerGUI = aColor.id === resp.data.id
+          if (isSameColorServerGUI) {
+            aColor = resp.data
+          }
+          return aColor
+        })
+        updateColors(updatedColors)
+      })
+      .catch(error => console.error(error))
   };
 
   const deleteColor = color => {
+    // close the edit option for a delete color
+    setEditing(false)
     // make a delete request to delete this color
-  };
+    axiosWithAuth().delete(`/api/colors/${color.id}`)
+      .then(resp => {
+        console.log(resp.data)
+        const updateColors = colors.filter(aColor => aColor.id !== resp.data.id)
+        updateColors(updateColors)
+      })
+      .catch(error => console.error(error))
+    };
+    
 
   return (
     <div className="colors-wrap">
-      <p>colors</p>
+      <h2>colors</h2>
       <ul>
         {colors.map(color => (
           <li key={color.color} onClick={() => editColor(color)}>
             <span>
               <span className="delete" onClick={e => {
-                    e.stopPropagation();
-                    deleteColor(color)
-                  }
-                }>
-                  x
+                e.stopPropagation();
+                deleteColor(color)
+              }
+              }>
+                x
               </span>{" "}
               {color.color}
             </span>
