@@ -1,6 +1,6 @@
 'https://github.com/royeradames/web-sprint-challenge-advanced-web-applications.git'
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 //import components
 import Login from "./components/Login";
@@ -12,6 +12,14 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <ul>
+          <li>
+            <Link to="/">Login</Link>
+          </li>
+          <li>
+            <Link to="/bubble">Bubble</Link>
+          </li>
+        </ul>
         <Route exact path="/" >
           <Login />
         </Route>
